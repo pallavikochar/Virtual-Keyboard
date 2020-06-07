@@ -2,13 +2,6 @@
 import cv2
 import numpy as np
 
-cap = cv2.VideoCapture(0)
-count, flag, typed, text, caps = 0,1,'','',True
-pts1 = pts2 = np.float32([[0,0],[640,0],[640,480],[0,480]])
-fourcc = cv2.VideoWriter_fourcc(*'XVID')
-out = cv2.VideoWriter('output_build.avi',fourcc,20,(640,480))
-font = cv2.FONT_HERSHEY_SIMPLEX
-
 def mask(frame): #masks the frame and returns image which has pointers visible 
 	h,s,v = 5, 180, 23
 	H,S,V = 15,255,180
@@ -80,6 +73,13 @@ def display(pressed,frame,caps,typed): #displays the pressed keys on the frame
 	cv2.putText(frame,state,(400,30),font,1,(0,0,255),2)
 	return typed,caps
 
+cap = cv2.VideoCapture(0)
+count, flag, typed, text, caps = 0,1,'','',True
+pts1 = pts2 = np.float32([[0,0],[640,0],[640,480],[0,480]])
+fourcc = cv2.VideoWriter_fourcc(*'XVID')
+out = cv2.VideoWriter('output_build.avi',fourcc,20,(640,480))
+font = cv2.FONT_HERSHEY_SIMPLEX
+
 while(True):
 	_,frame = cap.read()
 	location = []
@@ -87,7 +87,6 @@ while(True):
 	if not count:
 		h,w = frame.shape[:2]
 		touched_1 = set()
-
 
 	gray = cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
 	thresh = cv2.adaptiveThreshold(gray, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
