@@ -58,9 +58,8 @@ def extract(keyboard): #detects the keys and append them to a list by reading th
 				c[2],c[1] = c[1],c[2]
 			c[2],c[3]=c[3],c[2]
 			pts1 = np.float32(a[c])
-			pts2 = np.float32([[0,0],[300,0],[300,300],[0,300]])
-			M = cv2.getPerspectiveTransform(pts1,pts2)
-			dst = cv2.warpPerspective(keyboard,M,(300,300))
+			pts2 = np.float32([[0,0],[300,0],[300,300],[0,300]]) 
+			dst = cv2.warpPerspective(keyboard,cv2.getPerspectiveTransform(pts1,pts2),(300,300))
 			images.append(dst.copy())
 			location.append((a[c[0]],a[c[2]]))
 			print('keyboard')
@@ -99,8 +98,7 @@ while(True):
 	thresh = cv2.adaptiveThreshold(gray, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
 			 cv2.THRESH_BINARY_INV,15,15)
 	pts1,contours = transform(thresh,frame,pts1)
-	M = cv2.getPerspectiveTransform(pts1,pts2)
-	keyboard = cv2.warpPerspective(frame,M,(640,480))
+	keyboard = cv2.warpPerspective(frame,cv2.getPerspectiveTransform(pts1,pts2),(640,480))
 	if (pts1-pts2).any() and flag:
 		t_keyboard = cv2.warpPerspective(thresh,M,(640,480))
 		flag = 0
