@@ -133,10 +133,16 @@ while(True):
 	cv2.imshow('frame',frame)
 	out.write(frame)
 	count+=1
-	if cv2.waitKey(10) == ord('q'):
+	k = cv2.waitKey(10)
+	if k == 27:
 		break
-print('')
-cv2.destroyAllWindows()
-cap.release()
+# Close the window / Release webcam 
+cap.release() 
+  
+# After we release our webcam, we also release the output 
 out.release()
+  
+# De-allocate any associated memory usage  
+cv2.destroyAllWindows() 
+
 ```
